@@ -5,6 +5,9 @@ $user = $_SESSION['user'];
 if ($user == null) {
     echo ("<script>location.href='index.php';</script>");
 }
+require("./assets/auth/connection.php");
+$sql = "SELECT * FROM `tbl_questions`";
+$result = mysqli_query($con, $sql);
 ?>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
@@ -24,6 +27,12 @@ if ($user == null) {
     <link rel="stylesheet" href="assets/css/tiny-slider.css" />
     <link rel="stylesheet" href="assets/css/glightbox.min.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
+
+    <style>
+        .quesTitle:hover{
+            color: rgb(147, 87, 255);
+        }
+    </style>
 
 </head>
 
@@ -144,53 +153,40 @@ if ($user == null) {
                     <div class="single-inner">
                         <div class="post-details">
                             <div class="main-content-head">
-                                <div class="meta-information qList">
-                                    <h2 class="post-title">Branding Involves Developing Strategy to Create a Point of
-                                        Differentiation?
-                                    </h2>
-                                    <!-- End Meta Info -->
-                                    <ul class="meta-info">
-                                        <li>
-                                            <a href="javascript:void(0)">0 votes</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">10K Views</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">1 answer</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">@akjose</a>
-                                        </li>
-                                    </ul>
-                                    <!-- End Meta Info -->
-                                </div>
-                                <div class="meta-information qList">
-                                    <h2 class="post-title">Branding Involves Developing Strategy to Create a Point of
-                                        Differentiation?
-                                    </h2>
-                                    <!-- End Meta Info -->
-                                    <ul class="meta-info">
-                                        <li>
-                                            <a href="javascript:void(0)">0 votes</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">10K Views</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">1 answer</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">@akjose</a>
-                                        </li>
-                                    </ul>
-                                    <!-- End Meta Info -->
-                                </div>
-                                
+                                <?php
+                                while ($row = mysqli_fetch_array($result)) {
+                                    // $timestamp = ;
+                                    $createdOn = date("M d , Y \a\\t H:i", strtotime($row['createdOn']));
+                                ?>
+
+                                    <div class="meta-information qList">
+                                        <a href="./questonDetails.php?id=<?=$row['q_id']?>">
+                                            <h2 class="quesTitle post-title"><?= $row['q_title'] ?></h2>
+                                        </a>
+                                        <!-- End Meta Info -->
+                                        <ul class="meta-info">
+                                            <li>
+                                                <div><?= $row['q_views'] ?> Views</div>
+                                            </li>
+                                            <li>
+                                                <div><?= $row['q_answers'] ?> answer</div>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)">@<?= $row['usr_id'] ?></a>
+                                            </li>
+                                            <li>
+                                                <div><?= $createdOn ?></div>
+                                            </li>
+                                        </ul>
+                                        <!-- End Meta Info -->
+                                    </div>
+                                <?php } ?>
+
+
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <aside class="col-lg-4 col-md-12 col-12">
                     <div class="sidebar">
@@ -203,7 +199,7 @@ if ($user == null) {
                             </form>
                         </div>
                         <!-- End Single Widget -->
-                        
+
                     </div>
                 </aside>
             </div>
@@ -223,7 +219,7 @@ if ($user == null) {
                             <div class="single-footer f-about">
                                 <div class="logo">
                                     <a href="home.php">
-                                    <h5 style="color: white;">ERRANS</h5>
+                                        <h5 style="color: white;">ERRANS</h5>
                                     </a>
                                 </div>
                                 <p>Making the world a better place through constructing elegant hierarchies.</p>
