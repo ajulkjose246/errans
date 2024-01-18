@@ -17,4 +17,4 @@ Errans, the innovative Q&A platform, redefines collaborative problem-solving wit
 
 ## Authors
 
-* **Ajul K Jose** - *Web Developer* - [Ajul K Jose](https://www.ajulkjose.in) - **
+* **Ajul K Jose** - *Web Developer* - [Ajul K Jose](https://www.ajulkjose.in)
